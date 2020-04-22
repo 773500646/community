@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="js/jquery.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body>
     <div th:insert="~{navigation :: nav}"></div>
@@ -29,9 +29,9 @@
                         </h4>
                         <span th:text="${question.description}"></span> <br>
                         <span class="text-desc">
-                            <span th:text="${question.comment_count}"></span>个回复 |
-                            <span th:text="${question.view_count}"></span>次浏览 |
-                            <span th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd HH:mm')}"></span>
+                            <span th:text="${question.getCommentCount()}"></span>个回复 |
+                            <span th:text="${question.getViewCount()}"></span>次浏览 |
+                            <span th:text="${#dates.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}"></span>
                         </span>
                     </div>
                 </div>

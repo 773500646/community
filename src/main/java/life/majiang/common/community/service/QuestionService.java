@@ -2,6 +2,9 @@ package life.majiang.common.community.service;
 
 import life.majiang.common.community.dto.PaginationDTO;
 import life.majiang.common.community.dto.QuestionDTO;
+import life.majiang.common.community.exception.CustomizeErrorCode;
+import life.majiang.common.community.exception.CustomizeException;
+import life.majiang.common.community.mapper.Question1ExtMapper;
 import life.majiang.common.community.mapper.Question1Mapper;
 import life.majiang.common.community.mapper.QuestionMapper;
 import life.majiang.common.community.mapper.User1Mapper;
@@ -25,6 +28,9 @@ public class QuestionService {
 
     @Autowired
     private User1Mapper user1Mapper;
+
+    @Autowired
+    private Question1ExtMapper question1ExtMapper;
 
     @Autowired
     private Question1Mapper question1Mapper;
@@ -110,6 +116,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question1 question = question1Mapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         //User user = userMapper.findByAccountId(question.getCreator());
@@ -126,6 +135,9 @@ public class QuestionService {
             // 创建
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             question1Mapper.insert(question);
         } else {
             // 更新
@@ -135,7 +147,16 @@ public class QuestionService {
             Question1Example example = new Question1Example();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            question1Mapper.updateByExampleSelective(question, example);
+            int updated = question1Mapper.updateByExampleSelective(question, example);
+            if (updated != 1) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void incView(Integer id) {
+        Question1 record = new Question1();
+        record.setId(id);
+        question1ExtMapper.incView(record);
     }
 }

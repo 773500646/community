@@ -21,3 +21,5 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 ```
+
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
