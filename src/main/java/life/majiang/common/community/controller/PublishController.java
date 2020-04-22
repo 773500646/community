@@ -3,7 +3,9 @@ package life.majiang.common.community.controller;
 import life.majiang.common.community.dto.QuestionDTO;
 import life.majiang.common.community.mapper.QuestionMapper;
 import life.majiang.common.community.model.Question;
+import life.majiang.common.community.model.Question1;
 import life.majiang.common.community.model.User;
+import life.majiang.common.community.model.User1;
 import life.majiang.common.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,17 +65,18 @@ public class PublishController {
             return "publish";
         }
 
-        User user = (User)request.getSession().getAttribute("user");;
+        User1 user = (User1)request.getSession().getAttribute("user");;
         if(user == null) {
             model.addAttribute("error", "用户未登录");
             return "publish";
         }
 
-        Question question = new Question();
+        //Question question = new Question();
+        Question1 question = new Question1();
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
-        question.setCreator(user.getAccount_id());
+        question.setCreator(user.getAccountId());
         question.setId(id);
 
         questionService.createOrUpdate(question);
