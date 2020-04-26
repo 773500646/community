@@ -1,6 +1,7 @@
 package life.majiang.common.community.controller;
 
 import life.majiang.common.community.dto.PaginationDTO;
+import life.majiang.common.community.dto.QuestionDTO;
 import life.majiang.common.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,11 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "2") Integer size) {
-        PaginationDTO pagination = questionService.list(page, size);
+                        @RequestParam(name = "size", defaultValue = "5") Integer size,
+                        @RequestParam(name = "search", required = false) String search) {
+        PaginationDTO<QuestionDTO> pagination = questionService.list(search, page, size);
         model.addAttribute("pagination", pagination);
+        model.addAttribute("search", search);
         return "index";
     }
 }

@@ -1,7 +1,10 @@
 package life.majiang.common.community.enums;
 
 public enum CommentTypeEnum {
+    // 回复问题
     QUESTION(1),
+
+    // 回复评论
     COMMENT(2);
     private Integer type;
 

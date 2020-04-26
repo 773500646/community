@@ -1,4 +1,4 @@
-body{
+    body{
     background: #efefef;
 }
 .main{
@@ -16,6 +16,10 @@ body{
     height: 38px;
 }
 
+.media-body{
+    padding-top: 10px;
+}
+
 .text-desc{
     font-size: 12px;
     font-weight: normal;
@@ -28,4 +32,54 @@ body{
 
 .community-menu{
     color: #999;
+}
+
+.comment{
+    margin: 10px 0;
+}
+
+.btn-comment{
+    float: right;
+    margin-bottom: 10px;
+}
+
+.mt-10{
+    margin-bottom: 10px;
+}
+
+.c-gray{
+    color: gray;
+}
+
+.c-gray-hover{
+    cursor:pointer;
+    color: gray;
+}
+.c-gray-hover:hover{
+    color: cornflowerblue;
+}
+
+.c-blue {
+    color: cornflowerblue;
+}
+
+.fr{
+    float: right;
+}
+
+.mr-5{
+    margin-right: 5px;
+}
+
+
+.mr-15{
+    margin-right: 15px;
+}
+
+.collapse-box{
+    padding: 10px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: auto;
 }

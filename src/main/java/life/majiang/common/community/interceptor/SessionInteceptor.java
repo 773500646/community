@@ -5,6 +5,7 @@ import life.majiang.common.community.mapper.UserMapper;
 import life.majiang.common.community.model.User;
 import life.majiang.common.community.model.User1;
 import life.majiang.common.community.model.User1Example;
+import life.majiang.common.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,10 +20,10 @@ import java.util.List;
 public class SessionInteceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserMapper userMapper;
+    private User1Mapper user1Mapper;
 
     @Autowired
-    private User1Mapper user1Mapper;
+    private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -32,13 +33,14 @@ public class SessionInteceptor implements HandlerInterceptor {
             for (Cookie cookie: cookies) {
                 if(cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    //user = userMapper.findByToken(token);
                     User1Example user1Example = new User1Example();
                     user1Example.createCriteria()
                             .andTokenEqualTo(token);
                     List<User1> users = user1Mapper.selectByExample(user1Example);
                     if(users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
+                        Integer unreadCount = notificationService.unreadCount(users.get(0).getAccountId());
+                        request.getSession().setAttribute("unreadNotification", unreadCount);
                     }
                     break;
                 }
